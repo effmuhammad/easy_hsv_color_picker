@@ -56,7 +56,6 @@ def pick_color(event,x,y,flags,param):
         cv2.imshow("Mask",image_mask)
 
 def main():
-
     global image_hsv, pixel
 
     #OPEN DIALOG FOR READING THE IMAGE FILE
