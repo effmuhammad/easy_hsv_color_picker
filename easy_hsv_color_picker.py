@@ -1,3 +1,5 @@
+# area pick average tidak berjalan dengan baik, next method area pick lalu dibandingkan pixel mana yang memiliki result terbesar
+
 import cv2
 import numpy as np
 import sys
@@ -7,10 +9,10 @@ from tkinter import filedialog
 image_src = None
 image_hsv = None
 image_mask = None
-pixel = (0,0,0) #RANDOM DEFAULT VALUE
-hue_tolerance = 5
-saturation_tolerance = 5
-value_tolerance = 5
+pixel = (0,0,0) # RANDOM DEFAULT VALUE
+hue_tolerance = 10
+saturation_tolerance = 50
+value_tolerance = 50
 lower_hsv = np.array([0, 0, 0])
 upper_hsv = np.array([179, 255, 255])
 
@@ -45,13 +47,13 @@ def pick_color(event,x,y,flags,param):
     if event == cv2.EVENT_LBUTTONDOWN:
         list_pixels = []
         pixel = image_hsv[y,x]
-        square_dim= 5
+        square_dim=1
         # get pixel for the area around the mouse click
         for i in range(-square_dim,square_dim+1):
             for j in range(-square_dim,square_dim+1):
                 list_pixels.append(image_hsv[y+i,x+j])
         # get the average of the pixels
-        # pixel = np.mean(list_pixel, axis=0)
+        # pixel = np.mean(list_pixels, axis=0)
         # pixel = np.round(pixel).astype(int)
         
         # check boundaries for each pixel
@@ -83,6 +85,7 @@ def pick_color(event,x,y,flags,param):
         #A MONOCHROME MASK FOR GETTING A BETTER VISION OVER THE COLORS 
         image_mask = cv2.inRange(image_hsv,lower_hsv,upper_hsv)
         cv2.imshow("Thresholding",image_mask)
+
         # Create trackbars for threshold values
         cv2.createTrackbar('Hmin', 'Thresholding', hue_lower, 179, on_trackbar)
         cv2.createTrackbar('Smin', 'Thresholding', saturation_lower, 255, on_trackbar)
