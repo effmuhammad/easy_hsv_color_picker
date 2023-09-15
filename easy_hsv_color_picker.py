@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import sys
+import os
 import tkinter as tk
 from tkinter import filedialog
 
@@ -124,7 +124,8 @@ def main():
     #OPEN DIALOG FOR READING THE IMAGE FILE
     root = tk.Tk()
     root.withdraw() #HIDE THE TKINTER GUI
-    file_path = filedialog.askopenfilename()
+    project_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = filedialog.askopenfilename(initialdir=project_dir)
     root.update()
     image_src = cv2.imread(file_path)
 
