@@ -107,7 +107,7 @@ def main():
 
     # OPEN DIALOG FOR READING THE IMAGE FILE
     root = tk.Tk()
-    root.withdraw() #HIDE THE TKINTER GUI
+    root.withdraw()  # HIDE THE TKINTER GUI
     file_path = filedialog.askopenfilename()
     root.update()
     image_src = cv2.imread(file_path)
@@ -120,6 +120,9 @@ def main():
         dim = (width, height)
         image_src = cv2.resize(image_src, dim, interpolation=cv2.INTER_AREA)
 
+        # CREATE THE HSV FROM THE BGR IMAGEs
+        image_hsv = cv2.cvtColor(image_src, cv2.COLOR_BGR2HSV)
+
         # A MONOCHROME MASK FOR GETTING A BETTER VISION OVER THE COLORS
         cv2.imshow("Thresholding", image_src)
 
@@ -131,8 +134,7 @@ def main():
         cv2.createTrackbar('Smax', 'Thresholding', 0, 255, on_trackbar)
         cv2.createTrackbar('Vmax', 'Thresholding', 0, 255, on_trackbar)
 
-        # CREATE THE HSV FROM THE BGR IMAGEs
-        image_hsv = cv2.cvtColor(image_src, cv2.COLOR_BGR2HSV)
+        # Pick color window
         cv2.imshow("PickColor", image_src)
 
         # CALLBACK FUNCTION
